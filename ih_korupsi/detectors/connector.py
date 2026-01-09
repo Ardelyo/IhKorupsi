@@ -1,7 +1,7 @@
 import networkx as nx
 import pandas as pd
 from typing import Dict, Any, List, Set
-from core.base import BaseDetector
+from ..core.base import BaseDetector
 
 class Connector(BaseDetector):
     @property

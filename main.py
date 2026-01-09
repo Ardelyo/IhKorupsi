@@ -1,9 +1,9 @@
 import argparse
 import sys
 import json
-from utils.data_loader import DataLoader
-from core.engine import FraudEngine
-from utils.report_generator import ReportGenerator
+from ih_korupsi.utils.data_loader import DataLoader
+from ih_korupsi.core.engine import FraudEngine
+from ih_korupsi.utils.report_generator import ReportGenerator
 
 def main():
     parser = argparse.ArgumentParser(description="IH-Korupsi: Open Source Forensic Data Toolkit")

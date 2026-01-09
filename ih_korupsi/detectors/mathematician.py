@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from typing import Dict, Any, List
-from core.base import BaseDetector
+from ..core.base import BaseDetector
 from scipy import stats
 
 class Mathematician(BaseDetector):

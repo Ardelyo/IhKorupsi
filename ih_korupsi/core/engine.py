@@ -1,11 +1,11 @@
 import json
 from typing import List, Dict, Any
 import pandas as pd
-from core.base import BaseDetector
-from detectors.mathematician import Mathematician
-from detectors.connector import Connector
-from detectors.chronologist import Chronologist
-from detectors.string_detective import StringDetective
+from .base import BaseDetector
+from ..detectors.mathematician import Mathematician
+from ..detectors.connector import Connector
+from ..detectors.chronologist import Chronologist
+from ..detectors.string_detective import StringDetective
 
 class FraudEngine:
     """

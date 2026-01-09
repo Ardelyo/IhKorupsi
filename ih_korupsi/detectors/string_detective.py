@@ -1,6 +1,6 @@
 import pandas as pd
 from typing import Dict, Any, List, Tuple
-from core.base import BaseDetector
+from ..core.base import BaseDetector
 
 class StringDetective(BaseDetector):
     @property

@@ -1,7 +1,7 @@
 {
     "metadata": {
         "total_rows": 500,
-        "total_amount": 310019364.721871,
+        "total_amount": 308286120.37067926,
         "currency": "IDR"
     },
     "findings": {
@@ -9,15 +9,15 @@
             "detector_name": "The Mathematician",
             "benford_test": {
                 "observed": {
-                    "1": 0.034,
-                    "2": 0.03,
-                    "3": 0.03,
-                    "4": 0.04,
-                    "5": 0.234,
-                    "6": 0.202,
-                    "7": 0.19,
-                    "8": 0.236,
-                    "9": 0.004
+                    "1": 0.042,
+                    "2": 0.024,
+                    "3": 0.032,
+                    "4": 0.03,
+                    "5": 0.222,
+                    "6": 0.236,
+                    "7": 0.206,
+                    "8": 0.202,
+                    "9": 0.006
                 },
                 "expected": {
                     "1": 0.3010299956639812,
@@ -30,7 +30,7 @@
                     "8": 0.05115252244738129,
                     "9": 0.04575749056067514
                 },
-                "mad": 0.13482833219926535,
+                "mad": 0.1357172210881542,
                 "conformity_status": "Non-conformity",
                 "explanation": "Calculates the distribution of first digits. Significant deviation indicates potential data manipulation."
             },
@@ -38,9 +38,9 @@
                 "high_risk_entities": [
                     {
                         "entity": 3,
-                        "rsf_value": 16.65943101207827,
+                        "rsf_value": 17.619626391656404,
                         "largest_transaction": 10000000.0,
-                        "average_others": 600260.596700445
+                        "average_others": 567548.9240075714
                     }
                 ],
                 "explanation": "RSF identifies entities whose largest transaction is significantly higher than their average."
@@ -64,15 +64,7 @@
             "centrality_analysis": {
                 "top_influencers_pagerank": [
                     [
-                        "PT. Maju Jaya",
-                        0.17080288627211884
-                    ],
-                    [
                         "CV. Sumber Makmur",
-                        0.17080288627211884
-                    ],
-                    [
-                        "PT. Berdikari",
                         0.17080288627211884
                     ],
                     [
@@ -80,7 +72,15 @@
                         0.17080288627211884
                     ],
                     [
+                        "PT. Berdikari",
+                        0.17080288627211884
+                    ],
+                    [
                         "PT. Maju  Jaya",
+                        0.17080288627211884
+                    ],
+                    [
+                        "PT. Maju Jaya",
                         0.17080288627211884
                     ]
                 ],
@@ -90,11 +90,11 @@
                         0.0
                     ],
                     [
-                        "PT. Maju Jaya",
+                        "CV. Sumber Makmur",
                         0.0
                     ],
                     [
-                        "CV. Sumber Makmur",
+                        "Dinas Kesehatan",
                         0.0
                     ],
                     [
@@ -102,7 +102,7 @@
                         0.0
                     ],
                     [
-                        "Dinas Kesehatan",
+                        "PT. Maju  Jaya",
                         0.0
                     ]
                 ],
@@ -113,12 +113,12 @@
                 "large_clusters_count": 1,
                 "sample_large_clusters": [
                     [
-                        "CV. Sumber Makmur",
-                        "Treasury_Dept",
-                        "PT. Maju Jaya",
-                        "Dinas Kesehatan",
                         "PT. Berdikari",
-                        "PT. Maju  Jaya"
+                        "PT. Maju  Jaya",
+                        "CV. Sumber Makmur",
+                        "PT. Maju Jaya",
+                        "Treasury_Dept",
+                        "Dinas Kesehatan"
                     ]
                 ],
                 "explanation": "Identifies groups of actors who frequently interact with each other."
@@ -128,49 +128,49 @@
             "detector_name": "The Chronologist",
             "fiscal_cliff": {
                 "monthly_spending": {
-                    "1": 1331077.9641387805,
-                    "2": 788809.7315390398,
-                    "3": 146442.37815379843,
-                    "4": 600502.7177142408,
-                    "5": 258220.789370613,
-                    "6": 818056.6384258596,
-                    "7": 642960.6433704704,
-                    "8": 796786.361018302,
-                    "9": 653964.3756464645,
-                    "10": 10102346.017132906,
-                    "11": 75123.41682339914,
-                    "12": 293805073.6885372
+                    "1": 1273516.9874442967,
+                    "2": 577065.6461218735,
+                    "3": 138533.4806111122,
+                    "4": 97633.96772353761,
+                    "5": 111983.21433380122,
+                    "6": 635902.5314295932,
+                    "7": 1871957.0216491446,
+                    "8": 347956.4467297743,
+                    "9": 183303.80012429412,
+                    "10": 114181.62926497399,
+                    "11": 145143.99768558668,
+                    "12": 302788941.64756125
                 },
-                "december_vs_avg_ratio": 11.372389229380676,
+                "december_vs_avg_ratio": 11.78602298216313,
                 "status": "Extreme Dumping",
                 "explanation": "Compares December spending to the yearly average. High ratios suggest 'budget dumping' to avoid losing funds."
             },
             "velocity_anomalies": {
                 "high_velocity_events": [
                     {
-                        "vendor_id": 3,
-                        "date_only": "2025-12-28",
-                        "count": 90
-                    },
-                    {
-                        "vendor_id": 0,
-                        "date_only": "2025-12-28",
-                        "count": 88
-                    },
-                    {
-                        "vendor_id": 4,
-                        "date_only": "2025-12-28",
-                        "count": 88
-                    },
-                    {
                         "vendor_id": 2,
                         "date_only": "2025-12-28",
-                        "count": 79
+                        "count": 94
                     },
                     {
                         "vendor_id": 1,
                         "date_only": "2025-12-28",
-                        "count": 74
+                        "count": 91
+                    },
+                    {
+                        "vendor_id": 0,
+                        "date_only": "2025-12-28",
+                        "count": 90
+                    },
+                    {
+                        "vendor_id": 4,
+                        "date_only": "2025-12-28",
+                        "count": 76
+                    },
+                    {
+                        "vendor_id": 3,
+                        "date_only": "2025-12-28",
+                        "count": 68
                     }
                 ],
                 "explanation": "Identifies entities with an unusually high volume of transactions on a single day."
@@ -180,8 +180,8 @@
             "detector_name": "String Detective",
             "potential_ghost_vendors": [
                 {
-                    "name_1": "PT. Maju Jaya",
-                    "name_2": "PT. Maju  Jaya",
+                    "name_1": "PT. Maju  Jaya",
+                    "name_2": "PT. Maju Jaya",
                     "similarity_score": 0.9629629629629629
                 }
             ],

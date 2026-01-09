@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from typing import Dict, Any, List
-from core.base import BaseDetector
+from ..core.base import BaseDetector
 
 class Chronologist(BaseDetector):
     @property
