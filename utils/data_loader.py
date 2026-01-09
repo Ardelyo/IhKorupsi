@@ -5,7 +5,7 @@ from typing import Union, Optional
 
 class DataLoader:
     """
-    Handles ingestion from various formats.
+    Menangani ingestion dari berbagai format.
     """
     @staticmethod
     def load(source: str, type: str = 'csv') -> pd.DataFrame:
@@ -14,19 +14,19 @@ class DataLoader:
         elif type == 'json':
             return pd.read_json(source)
         elif type == 'sql':
-            # Assumes source is a path to a sqlite db
+            # Asumsi source adalah path ke sqlite db
             conn = sqlite3.connect(source)
-            # In a real scenario, table name would be passed
+            # Dalam skenario nyata, nama tabel akan dikirim sebagai parameter
             df = pd.read_sql_query("SELECT * FROM transactions", conn)
             conn.close()
             return df
         else:
-            raise ValueError(f"Unsupported file type: {type}")
+            raise ValueError(f"Tipe file tidak didukung: {type}")
 
     @staticmethod
     def generate_sample_data(rows: int = 100) -> pd.DataFrame:
         """
-        Generates synthetic data with intentional anomalies.
+        Menghasilkan data sintetis dengan anomali yang disengaja.
         """
         import random
         from datetime import datetime, timedelta
@@ -35,22 +35,22 @@ class DataLoader:
         data = []
         
         for i in range(rows):
-            # Normal transactions
+            # Transaksi normal
             date = datetime(2025, 1, 1) + timedelta(days=random.randint(0, 360))
             amount = random.uniform(1000, 50000)
             vendor = random.choice(vendors)
             sender = "Treasury_Dept"
             
-            # Injecting Benford Anomaly (too many 5s)
+            # Menanamkan Anomali Benford (terlalu banyak angka 5)
             if i % 10 == 0:
                 amount = float(f"5{random.randint(0, 9)}{random.randint(0, 9)}000")
             
-            # Injecting RSF Anomaly
+            # Menanamkan Anomali RSF
             if i == 50:
                 amount = 10000000
                 vendor = "PT. Berdikari"
 
-            # Injecting Fiscal Cliff (December dumping)
+            # Menanamkan Fiscal Cliff (dumping Desember)
             if i > 80:
                 date = datetime(2025, 12, 28)
                 amount = random.uniform(500000, 900000)

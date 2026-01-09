@@ -9,7 +9,7 @@ from detectors.string_detective import StringDetective
 
 class FraudEngine:
     """
-    Orchestration layer for IH-Korupsi.
+    Layer orkestrasi untuk IH-Korupsi.
     """
     def __init__(self):
         self.detectors: List[BaseDetector] = [
@@ -30,9 +30,9 @@ class FraudEngine:
         }
 
         for detector in self.detectors:
-            print(f"Running {detector.name}...")
+            print(f"Menjalankan {detector.name}...")
             try:
-                # Basic column mapping assumption, can be made more robust
+                # Asumsi pemetaan kolom dasar, bisa dibuat lebih robust
                 full_report["findings"][detector.name] = detector.run(df)
             except Exception as e:
                 full_report["findings"][detector.name] = {"error": str(e)}
@@ -42,4 +42,4 @@ class FraudEngine:
     def save_report(self, report: Dict[str, Any], output_path: str):
         with open(output_path, 'w') as f:
             json.dump(report, f, indent=4)
-        print(f"Report saved to {output_path}")
+        print(f"Laporan disimpan ke {output_path}")

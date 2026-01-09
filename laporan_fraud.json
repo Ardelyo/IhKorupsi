@@ -1,0 +1,191 @@
+{
+    "metadata": {
+        "total_rows": 500,
+        "total_amount": 309556971.05046374,
+        "currency": "IDR"
+    },
+    "findings": {
+        "Sang Matematikawan": {
+            "nama_detektor": "Sang Matematikawan",
+            "uji_benford": {
+                "observasi": {
+                    "1": 0.038,
+                    "2": 0.028,
+                    "3": 0.028,
+                    "4": 0.042,
+                    "5": 0.234,
+                    "6": 0.2,
+                    "7": 0.222,
+                    "8": 0.206,
+                    "9": 0.002
+                },
+                "ekspektasi": {
+                    "1": 0.3010299956639812,
+                    "2": 0.17609125905568124,
+                    "3": 0.12493873660829993,
+                    "4": 0.09691001300805642,
+                    "5": 0.07918124604762482,
+                    "6": 0.06694678963061322,
+                    "7": 0.05799194697768673,
+                    "8": 0.05115252244738129,
+                    "9": 0.04575749056067514
+                },
+                "mad": 0.13482833219926532,
+                "status_kesesuaian": "Tidak Sesuai",
+                "penjelasan": "Menghitung distribusi digit pertama. Penyimpangan signifikan mengindikasikan potensi manipulasi data."
+            },
+            "uji_rsf": {
+                "entitas_risiko_tinggi": [
+                    {
+                        "entitas": 3,
+                        "nilai_rsf": 16.97797022368947,
+                        "transaksi_terbesar": 10000000.0,
+                        "rata_rata_lainnya": 588998.5592062669
+                    }
+                ],
+                "penjelasan": "RSF mengidentifikasi entitas yang transaksi terbesarnya jauh lebih tinggi dari rata-ratanya."
+            },
+            "pencilan_statistik": {
+                "jumlah_pencilan_z_score": 1,
+                "jumlah_pencilan_iqr": 73,
+                "pencilan_teratas": [
+                    10000000.0
+                ],
+                "penjelasan": "Z-Score (>3) dan IQR mengidentifikasi nilai ekstrem dalam transaksi."
+            }
+        },
+        "Sang Penghubung": {
+            "nama_detektor": "Sang Penghubung",
+            "perdagangan_memutar": {
+                "jumlah_siklus": 0,
+                "sampel_siklus": [],
+                "penjelasan": "Siklus sederhana dalam graf mengindikasikan potensi perdagangan memutar atau pencucian uang."
+            },
+            "analisis_sentralitas": {
+                "pengaruh_tertinggi_pagerank": [
+                    [
+                        "PT. Berdikari",
+                        0.17080288627211884
+                    ],
+                    [
+                        "PT. Maju Jaya",
+                        0.17080288627211884
+                    ],
+                    [
+                        "Dinas Kesehatan",
+                        0.17080288627211884
+                    ],
+                    [
+                        "CV. Sumber Makmur",
+                        0.17080288627211884
+                    ],
+                    [
+                        "PT. Maju  Jaya",
+                        0.17080288627211884
+                    ]
+                ],
+                "jembatan_teratas_betweenness": [
+                    [
+                        "Treasury_Dept",
+                        0.0
+                    ],
+                    [
+                        "PT. Berdikari",
+                        0.0
+                    ],
+                    [
+                        "PT. Maju Jaya",
+                        0.0
+                    ],
+                    [
+                        "Dinas Kesehatan",
+                        0.0
+                    ],
+                    [
+                        "CV. Sumber Makmur",
+                        0.0
+                    ]
+                ],
+                "penjelasan": "PageRank menemukan entitas penting, sedangkan Betweenness menemukan aktor 'jembatan'."
+            },
+            "komunitas": {
+                "total_kluster": 1,
+                "jumlah_kluster_besar": 1,
+                "sampel_kluster_besar": [
+                    [
+                        "PT. Berdikari",
+                        "PT. Maju Jaya",
+                        "Treasury_Dept",
+                        "Dinas Kesehatan",
+                        "PT. Maju  Jaya",
+                        "CV. Sumber Makmur"
+                    ]
+                ],
+                "penjelasan": "Mengidentifikasi kelompok aktor yang sering berinteraksi satu sama lain."
+            }
+        },
+        "Sang Kronolog": {
+            "nama_detektor": "Sang Kronolog",
+            "fiscal_cliff": {
+                "pengeluaran_bulanan": {
+                    "1": 780159.3606803674,
+                    "2": 216519.98663982074,
+                    "3": 174801.73463705473,
+                    "4": 124342.08369440681,
+                    "5": 10592768.25576639,
+                    "6": 698804.8376711606,
+                    "7": 727559.4320002231,
+                    "8": 706411.3148707901,
+                    "9": 682767.9506794583,
+                    "10": 103165.1958367192,
+                    "11": 664157.5100172843,
+                    "12": 294085513.38797003
+                },
+                "rasio_desember_vs_rata_rata": 11.400247743347839,
+                "status": "Dumping Ekstrem",
+                "penjelasan": "Membandingkan pengeluaran Desember dengan rata-rata. Rasio tinggi menunjukkan 'budget dumping'."
+            },
+            "anomali_kecepatan": {
+                "kejadian_kecepatan_tinggi": [
+                    {
+                        "vendor_id": 4,
+                        "date_only": "2025-12-28",
+                        "jumlah": 96
+                    },
+                    {
+                        "vendor_id": 1,
+                        "date_only": "2025-12-28",
+                        "jumlah": 86
+                    },
+                    {
+                        "vendor_id": 0,
+                        "date_only": "2025-12-28",
+                        "jumlah": 83
+                    },
+                    {
+                        "vendor_id": 3,
+                        "date_only": "2025-12-28",
+                        "jumlah": 83
+                    },
+                    {
+                        "vendor_id": 2,
+                        "date_only": "2025-12-28",
+                        "jumlah": 71
+                    }
+                ],
+                "penjelasan": "Mengidentifikasi entitas dengan volume transaksi sangat tinggi dalam satu hari."
+            }
+        },
+        "Detektif String": {
+            "nama_detektor": "Detektif String",
+            "potensi_vendor_hantu": [
+                {
+                    "nama_1": "PT. Maju Jaya",
+                    "nama_2": "PT. Maju  Jaya",
+                    "skor_kemiripan": 0.9629629629629629
+                }
+            ],
+            "penjelasan": "Menemukan nama dengan kesamaan tinggi. Ini sering mengungkap 'Vendor Hantu'."
+        }
+    }
+}

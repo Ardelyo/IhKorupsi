@@ -7,59 +7,53 @@ from scipy import stats
 class Mathematician(BaseDetector):
     @property
     def name(self) -> str:
-        return "The Mathematician"
+        return "Sang Matematikawan"
 
     @property
     def description(self) -> str:
-        return "Statistical anomaly detection including Benford's Law, RSF, and Z-Score."
+        return "Deteksi anomali statistik termasuk Hukum Benford, RSF, dan Z-Score."
 
     def run(self, df: pd.DataFrame, amount_col: str = 'amount', entity_col: str = 'vendor_id') -> Dict[str, Any]:
         """
-        Runs multiple statistical tests on transaction data.
+        Menjalankan beberapa tes statistik pada data transaksi.
         """
         results = {
-            "detector": self.name,
-            "benford_test": self.benford_law_test(df[amount_col]),
-            "rsf_test": self.relative_size_factor(df, amount_col, entity_col),
-            "outliers": self.detect_outliers(df, amount_col)
+            "nama_detektor": self.name,
+            "uji_benford": self.benford_law_test(df[amount_col]),
+            "uji_rsf": self.relative_size_factor(df, amount_col, entity_col),
+            "pencilan_statistik": self.detect_outliers(df, amount_col)
         }
         return results
 
     def benford_law_test(self, series: pd.Series) -> Dict[str, Any]:
         """
-        Applies Benford's Law on the first digit of the amounts.
+        Menerapkan Hukum Benford pada digit pertama dari nilai transaksi.
         """
-        # Filter out zeros and negative values
         clean_series = series[series > 0]
         first_digits = clean_series.astype(str).str.lstrip('0. ').str[0].astype(int)
         
         counts = first_digits.value_counts().reindex(range(1, 10), fill_value=0)
         observed_freq = counts / len(first_digits)
         
-        # Expected distribution: log10(1 + 1/d)
         expected_freq = np.log10(1 + 1/np.arange(1, 10))
-        
-        # Mean Absolute Deviation (MAD)
         mad = np.mean(np.abs(observed_freq - expected_freq))
         
-        # Interpret MAD (based on Nigrini's thresholds)
-        conformity = "High"
-        if mad > 0.015: conformity = "Non-conformity"
-        elif mad > 0.012: conformity = "Marginal"
-        elif mad > 0.006: conformity = "Acceptable"
+        kesesuaian = "Tinggi"
+        if mad > 0.015: kesesuaian = "Tidak Sesuai"
+        elif mad > 0.012: kesesuaian = "Marginal"
+        elif mad > 0.006: kesesuaian = "Dapat Diterima"
 
         return {
-            "observed": observed_freq.to_dict(),
-            "expected": dict(zip(range(1, 10), expected_freq)),
+            "observasi": observed_freq.to_dict(),
+            "ekspektasi": dict(zip(range(1, 10), expected_freq)),
             "mad": float(mad),
-            "conformity": conformity,
-            "explanation": "Calculates the distribution of first digits. Significant deviation indicates potential data manipulation."
+            "status_kesesuaian": kesesuaian,
+            "penjelasan": "Menghitung distribusi digit pertama. Penyimpangan signifikan mengindikasikan potensi manipulasi data."
         }
 
     def relative_size_factor(self, df: pd.DataFrame, amount_col: str, entity_col: str) -> Dict[str, Any]:
         """
-        RSF = (Largest Transaction for Entity) / (Average Transaction for Entity excluding largest)
-        High RSF indicates a potential outlier within an entity's behavior.
+        RSF = (Transaksi Terbesar) / (Rata-rata Transaksi Lainnya)
         """
         grouped = df.groupby(entity_col)[amount_col].apply(list).to_dict()
         rsf_results = []
@@ -77,38 +71,35 @@ class Mathematician(BaseDetector):
             else:
                 rsf = largest / avg_others
             
-            if rsf > 10: # Threshold for high risk
+            if rsf > 10:
                 rsf_results.append({
-                    "entity": entity,
-                    "rsf": float(rsf),
-                    "largest_transaction": float(largest),
-                    "avg_others": float(avg_others)
+                    "entitas": entity,
+                    "nilai_rsf": float(rsf),
+                    "transaksi_terbesar": float(largest),
+                    "rata_rata_lainnya": float(avg_others)
                 })
 
         return {
-            "high_risk_entities": sorted(rsf_results, key=lambda x: x['rsf'], reverse=True)[:10],
-            "explanation": "RSF identifies entities whose largest transaction is significantly higher than their average."
+            "entitas_risiko_tinggi": sorted(rsf_results, key=lambda x: x['nilai_rsf'], reverse=True)[:10],
+            "penjelasan": "RSF mengidentifikasi entitas yang transaksi terbesarnya jauh lebih tinggi dari rata-ratanya."
         }
 
     def detect_outliers(self, df: pd.DataFrame, amount_col: str) -> Dict[str, Any]:
         """
-        Standard Z-Score and IQR detection.
+        Deteksi outlier menggunakan Z-Score dan IQR.
         """
         data = df[amount_col]
-        
-        # Z-Score
         z_scores = np.abs(stats.zscore(data))
         z_outliers = df[z_scores > 3]
         
-        # IQR
         Q1 = data.quantile(0.25)
         Q3 = data.quantile(0.75)
         IQR = Q3 - Q1
         iqr_outliers = df[(data < (Q1 - 1.5 * IQR)) | (data > (Q3 + 1.5 * IQR))]
 
         return {
-            "z_score_outliers_count": len(z_outliers),
-            "iqr_outliers_count": len(iqr_outliers),
-            "top_z_outliers": z_outliers.nlargest(5, amount_col)[amount_col].to_list(),
-            "explanation": "Z-Score (>3) and IQR identify statistical extremes in transaction values."
+            "jumlah_pencilan_z_score": len(z_outliers),
+            "jumlah_pencilan_iqr": len(iqr_outliers),
+            "pencilan_teratas": z_outliers.nlargest(5, amount_col)[amount_col].to_list(),
+            "penjelasan": "Z-Score (>3) dan IQR mengidentifikasi nilai ekstrem dalam transaksi."
         }

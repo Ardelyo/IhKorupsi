@@ -5,39 +5,41 @@ from core.base import BaseDetector
 class StringDetective(BaseDetector):
     @property
     def name(self) -> str:
-        return "String Detective"
+        return "Detektif String"
 
     @property
     def description(self) -> str:
-        return "Detects near-duplicate entity names (Ghost Vendors) using Levenshtein distance."
+        return "Mendeteksi nama entitas yang hampir sama (Vendor Hantu)."
 
     def run(self, df: pd.DataFrame, name_col: str = 'vendor_name') -> Dict[str, Any]:
         """
-        Identifies similar names that might be the same entity with slight variations.
+        Mengidentifikasi nama yang mirip.
         """
         unique_names = df[name_col].unique().tolist()
         potential_duplicates = []
         
-        # O(N^2) - suitable for small to medium lists, or could be optimized with blocking
         for i in range(len(unique_names)):
             for j in range(i + 1, len(unique_names)):
                 name1 = str(unique_names[i])
                 name2 = str(unique_names[j])
-                
                 score = self.levenshtein_ratio(name1.lower(), name2.lower())
                 
-                if 0.85 <= score < 1.0: # High similarity but not identical
-                    potential_duplicates.append((name1, name2, float(score)))
+                if 0.85 <= score < 1.0:
+                    potential_duplicates.append({
+                        "nama_1": name1,
+                        "nama_2": name2,
+                        "skor_kemiripan": float(score)
+                    })
 
         return {
-            "detector": self.name,
-            "potential_ghost_vendors": sorted(potential_duplicates, key=lambda x: x[2], reverse=True)[:20],
-            "explanation": "Finds names with high Levenshtein similarity. This often reveals 'Ghost Vendors' or split identities."
+            "nama_detektor": self.name,
+            "potensi_vendor_hantu": sorted(potential_duplicates, key=lambda x: x['skor_kemiripan'], reverse=True)[:20],
+            "penjelasan": "Menemukan nama dengan kesamaan tinggi. Ini sering mengungkap 'Vendor Hantu'."
         }
 
     def levenshtein_ratio(self, s1: str, s2: str) -> float:
         """
-        Hand-rolled Levenshtein distance ratio to keep Zero AI / Zero dependency.
+        Rasio jarak Levenshtein.
         """
         rows = len(s1) + 1
         cols = len(s2) + 1
@@ -54,9 +56,9 @@ class StringDetective(BaseDetector):
                     cost = 0
                 else:
                     cost = 1
-                distance[row][col] = min(distance[row-1][col] + 1,      # Deletion
-                                     distance[row][col-1] + 1,          # Insertion
-                                     distance[row-1][col-1] + cost)     # Substitution
+                distance[row][col] = min(distance[row-1][col] + 1,
+                                     distance[row][col-1] + 1,
+                                     distance[row-1][col-1] + cost)
 
         ratio = ((len(s1) + len(s2)) - distance[row][col]) / (len(s1) + len(s2))
         return ratio
